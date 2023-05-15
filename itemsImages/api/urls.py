@@ -13,3 +13,4 @@ urlpatterns = [
     path('', include(router.urls)),
     path('<int:id>', include(router.urls)),
 ]
+
