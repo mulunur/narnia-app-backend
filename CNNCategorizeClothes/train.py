@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 
 print(tf.__version__)
 
-EPOCHS_NUM = 50
+EPOCHS_NUM = 23
 
 fashion_mnist = tf.keras.datasets.fashion_mnist
 
@@ -34,7 +34,7 @@ test_loss, test_acc = model.evaluate(test_images,  test_labels, verbose=2)
 
 print(EPOCHS_NUM,'epochs loss:',test_loss,' accuracy:', test_acc)
 
-model.save("model_epoch20.h5")
+model.save("model_epoch23.h5")
 
 # 10 epochs loss: 0.3272 accuracy: 0.8855000138282776 
 

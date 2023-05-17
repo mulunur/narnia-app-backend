@@ -8,6 +8,7 @@ from django.core.files.base import ContentFile
 from colorthief import ColorThief
 import colorsys
 from CNNCategorizeClothes.predict import predictImage
+from services.getColorName import getHueColorName, getSaturationName, getLightnessName
 # Create your models here.
 
 class ContrastColors(models.Model):
@@ -16,6 +17,14 @@ class ContrastColors(models.Model):
     color_3 = models.CharField(max_length=30)
     def __str__(self):
         return {self.color_1, self.color_2, self.color_3}
+    
+    def save(self, *args, **kwargs):
+        color = args
+        self.color_1 = color
+        self.color_2 = (color + 120) % 360
+        self.color_3 = (self.color_2 + 120) % 360
+        super().save(*args, **kwargs)
+
 
 class AnalogueColors(models.Model):
     color_1 = models.CharField(max_length=30)
@@ -82,10 +91,12 @@ class Items(models.Model):
         #get color
         ct = ColorThief(self.rmbg_image)
         
-        color = ct.get_color(5)
-        print(color)
-        self.color= str(colorsys.rgb_to_hls(*color))
+        colors = colorsys.rgb_to_hls(*ct.get_color(5))
+        
+        self.color= getHueColorName(colors[0]) 
 
+
+        #self.contrast_palette_id.save(getHueColorName(colors[0]))
         
 
         super().save(*args, **kwargs)

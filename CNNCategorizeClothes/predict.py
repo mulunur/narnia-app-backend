@@ -83,7 +83,8 @@ def predictImage(image):
     # plt.colorbar()
     # plt.grid(False)
     # plt.show()
-    model = tf.keras.models.load_model(os.getcwd()+'/model.h5')
+    
+    model = tf.keras.models.load_model(os.getcwd()+'/model_epoch23.h5')
 
     probability_model = tf.keras.Sequential([model, 
                                          tf.keras.layers.Softmax()])
@@ -91,6 +92,7 @@ def predictImage(image):
     predictions_single = probability_model.predict(img)
 
     result=class_names[np.argmax(predictions_single[0])]
+    
     print(result)
     return result
 
